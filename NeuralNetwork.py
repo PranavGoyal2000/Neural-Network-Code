@@ -8,7 +8,7 @@ from keras.models import Sequential
 from keras.layers import Dense
 import numpy
 
-def Churn_Model(X_train, Y_train, X_test = None, Y_test = None, X_evaluate = None, 
+def Dense_Model(X_train, Y_train, X_test = None, Y_test = None, X_evaluate = None, 
                 input_nodes, output_nodes, layers_list, functions_list, loss_function, 
                 optimizer, epoch_number, batch_size):
     '''
@@ -60,5 +60,5 @@ def Churn_Model(X_train, Y_train, X_test = None, Y_test = None, X_evaluate = Non
             return (scores1[1], scores2[1], predictions)
         
 '''
-Churn_Model(_, _, _, _, _, 8, 1, [12, 8, 1], ['relu', 'relu', 'sigmoid'], 'binary_crossentropy', 'Adam', 150, 10)
+Dense_Model(_, _, _, _, _, 8, 1, [12, 8, 1], ['relu', 'relu', 'sigmoid'], 'binary_crossentropy', 'Adam', 150, 10)
 '''
