@@ -8,9 +8,9 @@ from keras.models import Sequential
 from keras.layers import Dense
 import numpy
 
-def Dense_Model(X_train, Y_train, X_test = None, Y_test = None, X_evaluate = None, 
-                input_nodes, output_nodes, layers_list, functions_list, loss_function, 
-                optimizer, epoch_number, batch_size):
+def Dense_Model(X_train, Y_train, X_test, Y_test, X_evaluate, 
+                input_nodes, output_nodes, layers_list, functions_list, 
+                loss_function, optimizer, epoch_number, batch_size):
     '''
     X_train is the training dataset (numpy array) of dimensions (m_train, n_X)
     Y_train is the outputs for X_train. (numpy array) of dimensions (m_train, n_Y)
@@ -27,10 +27,10 @@ def Dense_Model(X_train, Y_train, X_test = None, Y_test = None, X_evaluate = Non
     epoch_number is the number of epochs you want to run the code
     batch_size is the size of batch you want to use before running the optimizer
     '''
-    assert(len(layer_list) == len(functions_list))
-    assert(output_nodes == layer_list[(len(layer_list) - 1)])
+    assert(len(layers_list) == len(functions_list))
+    assert(output_nodes == layers_list[(len(layers_list) - 1)])
     assert(X_train.shape[0] == Y_train.shape[0])
-    assert(X_test.shape[0] == Y_test.shape[0] or (X_test == None and Y_test == None))
+    assert((str(type(X_test)) == "<class 'NoneType'>" and str(type(Y_test)) == "<class 'NoneType'>") or X_test.shape[0] == Y_test.shape[0])
     assert(type(loss_function) == str)
     assert(type(optimizer) == str)
     
@@ -41,19 +41,19 @@ def Dense_Model(X_train, Y_train, X_test = None, Y_test = None, X_evaluate = Non
     for i in range(len(layers_list) - 1):
         model.add(Dense(layers_list[i + 1], activation = functions_list[i + 1]))
     
-    model.compile(loss = function_loss, optimizer = optimizer, metrics = ['accuracy'])
+    model.compile(loss = loss_function, optimizer = optimizer, metrics = ['accuracy'])
     model.fit(X_train, Y_train, epochs = epoch_number, batch_size = batch_size)
     scores1 = model.evaluate(X_train, Y_train)
     
-    if X_test == None:
-        if X_evaluate == None:
+    if str(type(X_test)) == "<class 'NoneType'>":
+        if str(type(X_evaluate)) == "<class 'NoneType'>":
             return scores1[1]
         else:
             predictions = model.predict(X_evaluate)
             return (scores1[1], predictions)
     else:
         scores2 = model.evaluate(X_test, Y_test)
-        if X_evaluate == None:
+        if str(type(X_evaluate)) == "<class 'NoneType'>":
             return (scores1[1], scores2[1])
         else:
             predictions = model.predict(X_evaluate)
