@@ -1,9 +1,4 @@
-"""
-Created on Wed Jun 15 17:55:35 2019
-
-@author: pranav
-"""
-
+import pandas as pd
 from keras.models import Sequential
 from keras.layers import Dense
 import numpy
