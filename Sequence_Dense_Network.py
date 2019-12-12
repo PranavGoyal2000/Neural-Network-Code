@@ -30,7 +30,7 @@ def Churn_Sequence_Dense(X_train, Y_train, X_test, Y_test, X_evaluate, no_of_seq
     batch_size is the size of batch you want to use before running the optimizer
     '''
     assert(X_train.shape[0] == Y_train.shape[0])
-    assert((str(X_test) == 'None' and str(Y_test) == 'None') or X_test.shape[0] == Y_test.shape[0])
+    assert((str(type(X_test)) == "<class 'NoneType'>" and str(type(Y_test)) == "<class 'NoneType'>") or X_test.shape[0] == Y_test.shape[0])
     assert(type(loss_function) == str)
     assert(type(optimizer) == str)
     assert(no_of_sequences == X_train.shape[1])
@@ -60,15 +60,15 @@ def Churn_Sequence_Dense(X_train, Y_train, X_test, Y_test, X_evaluate, no_of_seq
     model.fit(X_train, Y_train, epochs = epoch_number)
     scores1 = model.evaluate(X_train, Y_train)
     
-    if str(X_test) == 'None':
-        if str(X_evaluate) == 'None':
+    if str(type(X_test)) == "<class 'NoneType'>":
+        if str(type(X_evaluate)) == "<class 'NoneType'>":
             return scores1[1]
         else:
             predictions = model.predict(X_evaluate)
             return (scores1[1], predictions)
     else:
         scores2 = model.evaluate(X_test, Y_test)
-        if str(X_evaluate) == 'None':
+        if str(type(X_evaluate)) == "<class 'NoneType'>":
             return (scores1[1], scores2[1])
         else:
             predictions = model.predict(X_evaluate)
